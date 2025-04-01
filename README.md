@@ -15,6 +15,9 @@ $ qemu-img create mydisk.img 10G
 ```
 Run qemu and wait for installer to come up:
 ```
+$ qemu-system-x86_64 -smp 6 -m 2G -hda ../qemu/archlinux.img -cdrom ../qemu/archlinux-2025.03.01-x86_64.iso
+
+
 $ qemu-system-x86_64 -nographic -m 4G -hda mydisk.img -kernel linux -initrd initrd.gz
 ```
 Run in another window to see the screen:
