@@ -4,7 +4,7 @@
 
 https://wiki.archlinux.org/title/Installation_guide
 
-At the moment, the best option for archlinux on qemu  virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
+At the moment, the best option for archlinux on qemu is virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
 
 
 ```bash
@@ -12,7 +12,7 @@ image_dir=../images/archlinux
 disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
 ```
 
-Run qemu and wait for installer to come up:
+Using the virtual machine image is more convenient, because there is no lengthy installation process
 ```
 $ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk}
 ```
