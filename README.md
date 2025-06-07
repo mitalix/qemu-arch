@@ -59,7 +59,7 @@ Network seems fine. So, do an upgrade
 ```
 
 
-Install docker
+Install docker, the dependency  containerd is included automatically
 
 ```bash
 [arch@archlinux ~]$ sudo pacman -S docker
@@ -156,7 +156,7 @@ Test docker with a hello-world
 [arch@archlinux ~]$ docker run hello-world
 ```
 
-Crank up minikube
+Crank up minikube, it could take a while
 ```bash
 [arch@archlinux ~]$ minikube start
 ```
@@ -165,9 +165,6 @@ Crank up minikube
 
 
 
-From a terminal within the guest log in as arch on the guest)
 
-```bash
-minikube start
-``` 
+
 
