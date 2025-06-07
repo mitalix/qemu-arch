@@ -72,11 +72,7 @@ Total Download Size:    46.96 MiB
 Total Installed Size:  195.17 MiB
 
 :: Proceed with installation? [Y/n] Y
-
 ```
-
-
-
 https://kubernetes.io/docs/tutorials/hello-minikube/
 
 Install the latest minikube stable release on x86-64 Linux using binary download:
@@ -85,20 +81,29 @@ Install the latest minikube stable release on x86-64 Linux using binary download
 [arch@archlinux ~]$ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 ```
 
-Install kubectl
+Install kubectl and the node agent kubelet
+
+- kubectl - A command line tool for communicating with a Kubernetes API server
+
+- kubelet - An agent that runs on each node in a Kubernetes cluster making sure that containers are running in a Pod
+
 
 ```bash
 [arch@archlinux ~]$ sudo pacman -S kubectl
-resolving dependencies...
-looking for conflicting packages...
-
-Packages (1) kubectl-1.33.1-1
-
-Total Download Size:   16.79 MiB
-Total Installed Size:  87.55 MiB
-
-:: Proceed with installation? [Y/n] Y
+[arch@archlinux ~]$ sudo pacman -S kubelet
 ```
+
+WARNING: Disable swap before using kubelet.service.
+
+```bash
+[arch@archlinux ~]$ swapon -s
+Filename				Type		Size		Used		Priority
+/swap/swapfile                          file		524284		256		-2
+[arch@archlinux ~]$ sudo swapoff -a
+[arch@archlinux ~]$ swapon -s
+[arch@archlinux ~]$ 
+```
+
 Enable and start docker, containerd will start automatically.
 
 ```
