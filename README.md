@@ -13,7 +13,7 @@ disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
 ```
 
 Using the virtual machine image is more convenient, because there is no lengthy installation process
-```
+```bash
 $ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk}
 ```
 Run in another window to see the screen:
@@ -31,7 +31,7 @@ $ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk} -net nic -net user,hostfwd=tcp::2
 ```
 Then you can log into the system from the host:
 
-```
+```bash
 $ ssh -p 2222 arch@localhost
 You could also use sftp when needed:
 ```
