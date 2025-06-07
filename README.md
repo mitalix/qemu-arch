@@ -77,18 +77,18 @@ Total Installed Size:  195.17 MiB
 
 
 
+https://kubernetes.io/docs/tutorials/hello-minikube/
 
-To install the latest minikube stable release on x86-64 Linux using binary download:
-https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download
+Install the latest minikube stable release on x86-64 Linux using binary download:
 ```bash
-$ curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
-$ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+[arch@archlinux ~]$ curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+[arch@archlinux ~]$ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 ```
 
 Install kubectl
 
 ```bash
-arch@archlinux ~]$ sudo pacman -S kubectl
+[arch@archlinux ~]$ sudo pacman -S kubectl
 resolving dependencies...
 looking for conflicting packages...
 
