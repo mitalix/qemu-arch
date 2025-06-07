@@ -16,7 +16,9 @@ Run in another window to see the screen:
 
 
 
-
+```bash
+$ vncviewer :5900
+```
 
 
 
