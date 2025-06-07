@@ -4,13 +4,16 @@
 
 Create a disk drive, that is a file image:
 
+https://wiki.archlinux.org/title/Installation_guide
+
 ```bash
-$ qemu-img create mydisk.img 10G
+image_dir=../images/qemu-archlinux
+disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
 ```
+
 Run qemu and wait for installer to come up:
 ```
-$ qemu-system-x86_64 -smp 6 -m 2G -hda ../images/archlinux/mydisk.img -cdrom ../images/archlinux/archlinux-2025.06.01-x86_64.iso
-
+$ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk}
 ```
 Run in another window to see the screen:
 
@@ -28,8 +31,22 @@ Not all options are needed especially when creating a test virtual machine, but 
 
 
 
-```php
-$ qemu-system-x86_64 -hda test.img -smp 4 -m 4G -accel kvm 
+
+Or proceed to the install, but try to add the user network
+
+```bash
+qemu-system-x86_64 -m 2G -cdrom ${image} -hda ${disk} -m 2G -net nic -net user,hostfwd=tcp::2222-:22
+
+
+$ qemu-system-x86_64 -smp 6 -m 2G -hda ../images/archlinux/mydisk.img -cdrom ../images/archlinux/archlinux-2025.06.01-x86_64.iso
 ```
+Then you can log into the system from the host:
+
+```
+# host > ssh -p 2222 italix@localhost
+You could also use sftp when needed:
+```
+sftp localhost -oPort=2222
+
 
 
