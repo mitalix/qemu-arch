@@ -2,9 +2,17 @@
 
 ---
 
+- Install qemu on host machine
+- Install or acquire VM image for guest machine
+- Kubernetes
+    - docker
+    - minikube
+
+
+
 https://wiki.archlinux.org/title/Installation_guide
 
-At the moment, the best option for archlinux on qemu is virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
+Presently, the best option for archlinux on qemu is virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
 
 
 ```bash
@@ -33,12 +41,12 @@ Then you can log into the system from the host:
 
 ```bash
 $ ssh -p 2222 arch@localhost
-You could also use sftp when needed:
 ```
-You could automatically login when you copy your piblic key to the virtual machine
+You could automatically login when you copy your piblic key from the host to the guest virtual machine
 ```bash
 $ ssh-copy-id -p 2222 arch@localhost
 ```
+Sftp also works, all assuming openssh is installed.
 
 ```bash
 $ sftp localhost -oPort=2222
