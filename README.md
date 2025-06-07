@@ -44,7 +44,9 @@ Then you can log into the system from the host:
 # host > ssh -p 2222 italix@localhost
 You could also use sftp when needed:
 ```
-sftp localhost -oPort=2222
 
+```bash
+$ sftp localhost -oPort=2222
+```
 
 
