@@ -35,10 +35,8 @@ Not all options are needed especially when creating a test virtual machine, but 
 Or proceed to the install, but try to add the user network
 
 ```bash
-qemu-system-x86_64 -m 2G -cdrom ${image} -hda ${disk} -m 2G -net nic -net user,hostfwd=tcp::2222-:22
+$ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
 
-
-$ qemu-system-x86_64 -smp 6 -m 2G -hda ../images/archlinux/mydisk.img -cdrom ../images/archlinux/archlinux-2025.06.01-x86_64.iso
 ```
 Then you can log into the system from the host:
 
