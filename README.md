@@ -93,7 +93,20 @@ Install kubectl and the node agent kubelet
 [arch@archlinux ~]$ sudo pacman -S kubelet
 ```
 
-WARNING: Disable swap before using kubelet.service.
+```
+[arch@archlinux ~]$ sudo systemctl enable --now docker
+Created symlink '/etc/systemd/system/multi-user.target.wants/docker.service' → '/usr/lib/systemd/system/docker.service'.
+
+arch@archlinux ~]$ sudo systemctl enable --now kubelet
+Created symlink '/etc/systemd/system/multi-user.target.wants/kubelet.service' → '/usr/lib/systemd/system/kubelet.service'.
+```
+
+Give it a reboot
+```bash
+[arch@archlinux ~]$ sudo reboot
+```
+
+> [!WARNING] WARNING: Disable swap before using kubelet.service.
 
 ```bash
 [arch@archlinux ~]$ swapon -s
@@ -105,15 +118,6 @@ Filename				Type		Size		Used		Priority
 ```
 
 Enable and start docker and kubelet, containerd will start automatically.
-
-
-```
-[arch@archlinux ~]$ sudo systemctl enable --now docker
-Created symlink '/etc/systemd/system/multi-user.target.wants/docker.service' → '/usr/lib/systemd/system/docker.service'.
-
-arch@archlinux ~]$ sudo systemctl enable --now kubelet
-Created symlink '/etc/systemd/system/multi-user.target.wants/kubelet.service' → '/usr/lib/systemd/system/kubelet.service'.
-```
 
 
 
