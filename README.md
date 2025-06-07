@@ -24,12 +24,6 @@ Run in another window to see the screen:
 $ vncviewer :5900
 ```
 
-Not all options are needed especially when creating a test virtual machine, but one of them is a nice convenience
-```
-# setfont ter-132b
-```
-
-
 Or try to add the user network
 
 ```bash
