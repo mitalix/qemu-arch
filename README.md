@@ -104,43 +104,18 @@ Filename				Type		Size		Used		Priority
 [arch@archlinux ~]$ 
 ```
 
-Enable and start docker, containerd will start automatically.
+Enable and start docker and kubelet, containerd will start automatically.
+
 
 ```
-
 [arch@archlinux ~]$ sudo systemctl enable --now docker
 Created symlink '/etc/systemd/system/multi-user.target.wants/docker.service' → '/usr/lib/systemd/system/docker.service'.
-[arch@archlinux ~]$ systemctl status containerd
-● containerd.service - containerd container runtime
-     Loaded: loaded (/usr/lib/systemd/system/containerd.service; 
-disabled; preset: disabled)
-     Active: active (running) since Sat 2025-06-07 21:45:14 UTC; 46s ago
- Invocation: 49e4e0117b87484498dfeff249d9289a
-       Docs: https://containerd.io
-    Process: 557 ExecStartPre=/usr/bin/modprobe overlay (code=exited, status=0/SUCCESS)
-   Main PID: 560 (containerd)
-      Tasks: 11
-     Memory: 70.9M (peak: 79.8M)
-        CPU: 5.707s
-     CGroup: /system.slice/containerd.service
-             └─560 /usr/bin/containerd
-[arch@archlinux ~]$ systemctl status docker
-● docker.service - Docker Application Container Engine
-     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled
-; preset: disabled)
-     Active: active (running) since Sat 2025-06-07 21:45:50 UTC; 15s ago
- Invocation: baa572ea278f4192b77c15a24ec6fa64
-TriggeredBy: ● docker.socket
-       Docs: https://docs.docker.com
-   Main PID: 589 (dockerd)
-      Tasks: 12
-     Memory: 92.1M (peak: 95.1M)
-        CPU: 15.430s
-     CGroup: /system.slice/docker.service
-             └─589 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
-[arch@archlinux ~]$ 
 
+arch@archlinux ~]$ sudo systemctl enable --now kubelet
+Created symlink '/etc/systemd/system/multi-user.target.wants/kubelet.service' → '/usr/lib/systemd/system/kubelet.service'.
 ```
+
+
 
 Install your favorite editor
 
@@ -165,8 +140,25 @@ Crank up minikube, it could take a while
 ```bash
 [arch@archlinux ~]$ minikube start
 ```
+Health checks:
+
+```bash
+
+[arch@archlinux ~]$ echo;list="docker kubelet containerd"; for service in ${list}; do echo -en Svc ${service}:"\t"; echo -en $(systemctl is-enabled ${service})' \t'$(systemctl is-active ${service})'  \t'failure status : $(systemctl is-failed ${service});echo;done; echo System-wide status: $(systemctl  is-system-running)
+
+Svc docker: 	enabled 	active  	failure status : active
+Svc kubelet:	disabled 	inactive  	failure status : inactive
+Svc containerd:	disabled 	active  	failure status : active
+System-wide status: running
+```
 
 
+Basic healthcheck
+```bash
+[arch@archlinux ~]$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m20s
+```
 
 
 
