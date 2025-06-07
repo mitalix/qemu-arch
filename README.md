@@ -41,6 +41,10 @@ $ ssh -p 2222 arch@localhost
 You could automatically login when you copy your public key from the host to the guest virtual machine
 ```bash
 $ ssh-copy-id -p 2222 arch@localhost
+$ ssh -p 2222 arch@localhost
+Last login: Sat Jun  7 21:42:09 2025 from 10.0.2.2
+[arch@archlinux ~]$ 
+
 ```
 Sftp also works
 
@@ -94,11 +98,75 @@ Total Installed Size:  87.55 MiB
 
 :: Proceed with installation? [Y/n] Y
 ```
+Enable and start docker, containerd will start automatically.
+
+```
+
+[arch@archlinux ~]$ sudo systemctl enable --now docker
+Created symlink '/etc/systemd/system/multi-user.target.wants/docker.service' → '/usr/lib/systemd/system/docker.service'.
+[arch@archlinux ~]$ systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/usr/lib/systemd/system/containerd.service; 
+disabled; preset: disabled)
+     Active: active (running) since Sat 2025-06-07 21:45:14 UTC; 46s ago
+ Invocation: 49e4e0117b87484498dfeff249d9289a
+       Docs: https://containerd.io
+    Process: 557 ExecStartPre=/usr/bin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 560 (containerd)
+      Tasks: 11
+     Memory: 70.9M (peak: 79.8M)
+        CPU: 5.707s
+     CGroup: /system.slice/containerd.service
+             └─560 /usr/bin/containerd
+[arch@archlinux ~]$ systemctl status docker
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled
+; preset: disabled)
+     Active: active (running) since Sat 2025-06-07 21:45:50 UTC; 15s ago
+ Invocation: baa572ea278f4192b77c15a24ec6fa64
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 589 (dockerd)
+      Tasks: 12
+     Memory: 92.1M (peak: 95.1M)
+        CPU: 15.430s
+     CGroup: /system.slice/docker.service
+             └─589 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+[arch@archlinux ~]$ 
+
+```
+
+Install your favorite editor
+
+```bash
+[arch@archlinux ~]$ sudo pacman -S vim
+```
+Sudo is not necessary, when you add the user to the docker group
+```bash
+[arch@archlinux ~]$ sudo vim /etc/group
+[arch@archlinux ~]$ grep docker /etc/group
+docker:x:971:arch
+```
 
 
-From a terminal with administrator access (logged in as arch on the guest)
+Test docker with a hello-world
+
+```bash
+[arch@archlinux ~]$ docker run hello-world
+```
+
+Crank up minikube
+```bash
+[arch@archlinux ~]$ minikube start
+```
+
+
+
+
+
+From a terminal within the guest log in as arch on the guest)
 
 ```bash
 minikube start
-```
+``` 
 
