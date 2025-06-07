@@ -12,7 +12,7 @@
 
 https://wiki.archlinux.org/title/Installation_guide
 
-Presently, the best option for archlinux on qemu is virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
+Presently, the best option for archlinux on qemu is a virtual machine image https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
 
 
 ```bash
@@ -35,9 +35,9 @@ $ vncviewer :5900
 Or try to add the user network
 
 ```bash
-$ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
+$ qemu-system-x86_64 -smp 6 -m 4G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
 ```
-Then you can log into the system from the host:
+The username/password default  combination for the base VM is arch/arch. Log into the system from the host:
 
 ```bash
 $ ssh -p 2222 arch@localhost
@@ -50,6 +50,12 @@ Sftp also works, all assuming openssh is installed.
 
 ```bash
 $ sftp localhost -oPort=2222
+```
+
+Network seems fine. So, do an upgrade
+
+```bash
+[arch@archlinux ~]$ sudo su pacman -Syu
 ```
 
 
