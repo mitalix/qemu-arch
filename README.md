@@ -7,7 +7,7 @@ Create a disk drive, that is a file image:
 https://wiki.archlinux.org/title/Installation_guide
 
 ```bash
-image_dir=../images/qemu-archlinux
+image_dir=../images/archlinux
 disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
 ```
 
@@ -24,7 +24,7 @@ $ vncviewer :5900
 ```
 
 Not all options are needed especially when creating a test virtual machine, but one of them is a nice convenience
-```bash
+```
 # setfont ter-132b
 ```
 
