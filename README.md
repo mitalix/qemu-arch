@@ -6,7 +6,7 @@
 - Install or acquire VM image for guest machine
 - Kubernetes
     - docker
-    - minikube
+    - minikube (requires at least 2G memory)
 
 
 
@@ -25,15 +25,10 @@ Using the virtual machine image is more convenient, because there is no lengthy 
 $ qemu-system-x86_64 -smp 6 -m 2G -hda ${disk}
 ```
 Run in another window to see the screen:
-
-
-
 ```bash
 $ vncviewer :5900
 ```
-
-Or try to add the user network
-
+Make sure openssh is installed so you can ssh to the user network
 ```bash
 $ qemu-system-x86_64 -smp 6 -m 4G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
 ```
@@ -46,7 +41,7 @@ You could automatically login when you copy your piblic key from the host to the
 ```bash
 $ ssh-copy-id -p 2222 arch@localhost
 ```
-Sftp also works, all assuming openssh is installed.
+Sftp also works
 
 ```bash
 $ sftp localhost -oPort=2222
