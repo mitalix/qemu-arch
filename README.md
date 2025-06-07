@@ -96,3 +96,9 @@ Total Installed Size:  87.55 MiB
 ```
 
 
+From a terminal with administrator access (logged in as arch on the guest)
+
+```bash
+minikube start
+```
+
