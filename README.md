@@ -2,13 +2,9 @@
 
 ---
 
-Create a disk drive, that is a file image:
-
 https://wiki.archlinux.org/title/Installation_guide
 
-
-VM images
-Virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
+At the moment, the best option for archlinux on qemu  virtual machine images https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
 
 
 ```bash
