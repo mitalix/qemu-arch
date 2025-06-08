@@ -195,4 +195,4 @@ default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP 
 
 
 Notes:
-[^1]: You could completely disable swap
+[^1]: You could completely disable swap by commenting out the swap section in /etc/fstab
