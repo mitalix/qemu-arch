@@ -136,12 +136,8 @@ Test docker with a hello-world
 ```bash
 [arch@archlinux ~]$ docker run hello-world
 ```
-> [!WARNING] 
-WARNING: Disable swap before using kubelet.service.
+> [!WARNING] Disable swap before using kubelet.service.
 
-
-> [!IMPORTANT]  
-boing
 ```bash
 [arch@archlinux ~]$ swapon -s
 Filename				Type		Size		Used		Priority
@@ -178,8 +174,7 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m20s
 
 All namespaces kubernetes healthcheck
 ```bash
-
-arch@archlinux ~]$ kubectl get all --all-namespaces
+[arch@archlinux ~]$ kubectl get all --all-namespaces
 NAMESPACE     NAME                                   READY   STATUS    RESTARTS        AGE
 kube-system   pod/etcd-minikube                      1/1     Running   2 (10m ago)     103m
 kube-system   pod/kube-apiserver-minikube            1/1     Running   5 (10m ago)     103m
@@ -188,8 +183,6 @@ kube-system   pod/kube-scheduler-minikube            1/1     Running   2 (10m ag
 
 NAMESPACE   NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   62m
-
-
 ```
 
 
