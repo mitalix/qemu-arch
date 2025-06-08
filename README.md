@@ -93,6 +93,8 @@ Install kubectl and the node agent kubelet
 [arch@archlinux ~]$ sudo pacman -S kubelet
 ```
 
+
+Enable and start docker and kubelet, containerd will start automatically.
 ```
 [arch@archlinux ~]$ sudo systemctl enable --now docker
 Created symlink '/etc/systemd/system/multi-user.target.wants/docker.service' → '/usr/lib/systemd/system/docker.service'.
@@ -105,20 +107,15 @@ Give it a reboot
 ```bash
 [arch@archlinux ~]$ sudo reboot
 ```
-
-> [!WARNING] WARNING: Disable swap before using kubelet.service.
-
+Health check
 ```bash
-[arch@archlinux ~]$ swapon -s
-Filename				Type		Size		Used		Priority
-/swap/swapfile                          file		524284		256		-2
-[arch@archlinux ~]$ sudo swapoff -a
-[arch@archlinux ~]$ swapon -s
-[arch@archlinux ~]$ 
+[arch@archlinux ~]$ echo;list="docker kubelet containerd"; for service in ${list}; do echo -en Svc ${service}:"\t"; echo -en $(systemctl is-enabled ${service})' \t'$(systemctl is-active ${service})'  \t'failure status : $(systemctl is-failed ${service});echo;done; echo System-wide status: $(systemctl  is-system-running)
+
+Svc docker: 	enabled 	active  	failure status : active
+Svc kubelet:	enabled 	active  	failure status : active
+Svc containerd:	disabled 	active  	failure status : active
+System-wide status: running
 ```
-
-Enable and start docker and kubelet, containerd will start automatically.
-
 
 
 Install your favorite editor
@@ -139,25 +136,39 @@ Test docker with a hello-world
 ```bash
 [arch@archlinux ~]$ docker run hello-world
 ```
+> [!WARNING] 
+WARNING: Disable swap before using kubelet.service.
+
+
+> [!IMPORTANT]  
+boing
+```bash
+[arch@archlinux ~]$ swapon -s
+Filename				Type		Size		Used		Priority
+/swap/swapfile                          file		524284		256		-2
+[arch@archlinux ~]$ sudo swapoff -a
+[arch@archlinux ~]$ swapon -s
+[arch@archlinux ~]$ 
+```
+
 
 Crank up minikube, it could take a while
 ```bash
-[arch@archlinux ~]$ minikube start
+[arch@archlinux ~]$ minikube start --validate=false
 ```
 Health checks:
 
 ```bash
-
 [arch@archlinux ~]$ echo;list="docker kubelet containerd"; for service in ${list}; do echo -en Svc ${service}:"\t"; echo -en $(systemctl is-enabled ${service})' \t'$(systemctl is-active ${service})'  \t'failure status : $(systemctl is-failed ${service});echo;done; echo System-wide status: $(systemctl  is-system-running)
 
 Svc docker: 	enabled 	active  	failure status : active
-Svc kubelet:	disabled 	inactive  	failure status : inactive
+Svc kubelet:	enabled 	active  	failure status : active
 Svc containerd:	disabled 	active  	failure status : active
 System-wide status: running
 ```
 
 
-Basic healthcheck
+Basic kubernetes healthcheck
 ```bash
 [arch@archlinux ~]$ kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
@@ -165,7 +176,21 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m20s
 ```
 
 
+All namespaces kubernetes healthcheck
+```bash
 
+arch@archlinux ~]$ kubectl get all --all-namespaces
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS        AGE
+kube-system   pod/etcd-minikube                      1/1     Running   2 (10m ago)     103m
+kube-system   pod/kube-apiserver-minikube            1/1     Running   5 (10m ago)     103m
+kube-system   pod/kube-controller-manager-minikube   1/1     Running   9 (5m18s ago)   103m
+kube-system   pod/kube-scheduler-minikube            1/1     Running   2 (10m ago)     103m
+
+NAMESPACE   NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   62m
+
+
+```
 
 
 
