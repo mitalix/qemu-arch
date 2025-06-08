@@ -8,6 +8,7 @@
     - docker
     - minikube (requires at least 2G memory)
     - kubectl
+    - kubelet
 
 
 
