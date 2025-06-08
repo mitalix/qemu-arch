@@ -158,7 +158,7 @@ Filename				Type		Size		Used		Priority
 
 Crank up minikube, it could take a while
 ```bash
-[arch@archlinux ~]$ minikube start --validate=false
+[arch@archlinux ~]$ minikube start
 ```
 Health checks:
 
