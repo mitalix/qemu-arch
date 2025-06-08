@@ -32,7 +32,7 @@ Run in another window to see the screen:
 ```bash
 $ vncviewer :5900
 ```
-Make sure openssh is installed, if you want to ssh to the user network
+Make sure openssh is installed on the host, if you want to ssh to the guest user network
 ```bash
 $ qemu-system-x86_64 -smp 6 -m 4G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
 ```
