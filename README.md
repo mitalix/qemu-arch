@@ -144,7 +144,7 @@ Test docker with a hello-world
 ##### Operational State Start
 
 > [!WARNING]
-Disable swap before using kubelet.service.
+Disable swap[^1] before using kubelet.service.
 
 ```bash
 [arch@archlinux ~]$ swapon -s
@@ -194,4 +194,5 @@ default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP 
 ```
 
 
-
+Notes:
+[^1]: You could completely disable swap
