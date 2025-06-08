@@ -17,6 +17,8 @@ https://wiki.archlinux.org/title/Installation_guide
 Presently, the best option for archlinux on qemu is a virtual machine image https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages
 
 
+##### Configuration Start
+
 ```bash
 image_dir=../images/archlinux
 disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
@@ -137,6 +139,10 @@ Test docker with a hello-world
 ```bash
 [arch@archlinux ~]$ docker run hello-world
 ```
+##### Configuration End
+
+##### Operational State Start
+
 > [!WARNING]
 Disable swap before using kubelet.service.
 
@@ -174,7 +180,7 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m20s
 ```
 
 
-All namespaces kubernetes healthcheck
+All namespaces healthcheck
 ```bash
 [arch@archlinux ~]$ kubectl get all --all-namespaces
 NAMESPACE     NAME                                   READY   STATUS    RESTARTS        AGE
