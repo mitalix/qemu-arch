@@ -136,7 +136,8 @@ Test docker with a hello-world
 ```bash
 [arch@archlinux ~]$ docker run hello-world
 ```
-> [!WARNING] Disable swap before using kubelet.service.
+> [!WARNING]
+Disable swap before using kubelet.service.
 
 ```bash
 [arch@archlinux ~]$ swapon -s
