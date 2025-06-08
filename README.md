@@ -106,7 +106,7 @@ arch@archlinux ~]$ sudo systemctl enable --now kubelet
 Created symlink '/etc/systemd/system/multi-user.target.wants/kubelet.service' → '/usr/lib/systemd/system/kubelet.service'.
 ```
 
-Give it a reboot
+Give it a reboot, or not
 ```bash
 [arch@archlinux ~]$ sudo reboot
 ```
