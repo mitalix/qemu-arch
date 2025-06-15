@@ -36,26 +36,9 @@ Make sure openssh is installed on the host, if you want to ssh to the guest user
 ```bash
 $ qemu-system-x86_64 -smp 6 -m 4G -hda ${disk} -net nic -net user,hostfwd=tcp::2222-:22
 ```
-The username/password default  combination for the base VM is arch/arch. Log into the system from the host:
 
-```bash
-$ ssh -p 2222 arch@localhost
-```
-You could automatically login when you copy your public key from the host to the guest virtual machine
-```bash
-$ ssh-copy-id -p 2222 arch@localhost
-$ ssh -p 2222 arch@localhost
-Last login: Sat Jun  7 21:42:09 2025 from 10.0.2.2
-[arch@archlinux ~]$ 
 
-```
-Sftp also works
-
-```bash
-$ sftp arch@localhost -oPort=2222
-```
-
-Network seems fine. So, do an upgrade
+When the network works fine, do an upgrade
 
 ```bash
 [arch@archlinux ~]$ sudo su pacman -Syu
@@ -194,5 +177,44 @@ default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP 
 ```
 
 
+---
+
 Notes:
+#### Optional Network configuration
+
+The username/password default  combination for the base VM is arch/arch. Log into the system from the host:
+```bash
+$ ssh -p 2222 arch@localhost
+```
+You could automatically login when you copy your public key from the host to the guest virtual machine
+```bash
+$ ssh-copy-id -p 2222 arch@localhost
+$ ssh -p 2222 arch@localhost
+Last login: Sat Jun  7 21:42:09 2025 from 10.0.2.2
+[arch@archlinux ~]$ 
+```
+- Sftp works
+
+```bash
+$ sftp arch@localhost -oPort=2222
+```
+- User mode virtio drivers. Using para-virtualized drivers and configured user networking with port forwarding to expose SSH on the host machine
+
+```bash
+qemu-system-x86_64 -m 4G -drive file=${disk},if=virtio -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net-pci,netdev=net0
+```
+- Ssh via vsocks.  Try using without needing to configure a network interface within the guest. Also, try with kmv accelerator.
+```bash
+$ qemu-system-x86_64 -accel kvm -smp 4 -m 4G -hda ${disk} -device vhost-vsock-pci,id=vhost-vsock-pci0,guest-cid=555 
+```
+```bash
+[italix@flintstone New]$ ssh arch@vsock/555
+Warning: Permanently added 'vsock/555' (ED25519) to the list of known hosts.
+Last login: Sun Jun 15 08:09:34 2025 from UNKNOWN
+[arch@archlinux ~]$ 
+```
+
+
+
+
 [^1]: You could completely disable swap by commenting out the swap section in /etc/fstab
