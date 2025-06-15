@@ -179,7 +179,6 @@ default     service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP 
 
 ---
 
-Notes:
 #### Optional Network configuration
 
 The username/password default  combination for the base VM is arch/arch. Log into the system from the host:
@@ -215,6 +214,6 @@ Last login: Sun Jun 15 08:09:34 2025 from UNKNOWN
 ```
 
 
-
-
+---
+Notes:
 [^1]: You could completely disable swap by commenting out the swap section in /etc/fstab
