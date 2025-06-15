@@ -1,39 +1,49 @@
 
-I installed archlinux into qemu successfully (I could install from the network), but would not boot up. So, I downloaded a premade archlinux virtual machine and booted up on qemu. Using user network and host translation I can ssh into the running image. Even while I have set the variables http_proxy=proxy.company.com:1234 and https_proxy=proxy.company.com:1234, I am not able to upgrade (pacman -Syu). I get some kind of TLS timeout errors.
+I installed archlinux into qemu successfully (I could install from the network), but would not boot up. So, I downloaded a premade archlinux virtual machine and booted up on qemu. Using user network and host translation I can ssh into the running image. Even while I have set the variables
+```bash
+http_proxy=proxy.company.com:1234
+https_proxy=proxy.company.com:1234
+```
+I am not able to upgrade (pacman -Syu). I get some kind of TLS timeout errors.
 
 It sounds like you're encountering TLS timeout errors when trying to run pacman -Syu on your Arch Linux virtual machine in QEMU, likely due to network proxy issues. Since you're using a company proxy (proxy.company.com:1234) and user-mode networking with host translation in QEMU, let's troubleshoot and resolve this step-by-step.
-Possible Causes
-Proxy Configuration: The http_proxy and https_proxy environment variables may not be correctly configured or propagated to pacman.
+#### Possible Causes
+- Proxy Configuration: The http_proxy and https_proxy environment variables may not be correctly configured or propagated to pacman.
 
-QEMU User-Mode Networking: QEMU's user-mode networking (SLiRP) may not fully support proxy settings or may have connectivity limitations.
+- QEMU User-Mode Networking: QEMU's user-mode networking (SLiRP) may not fully support proxy settings or may have connectivity limitations.
 
-TLS/SSL Issues: The TLS timeout could be due to certificate issues, proxy interception, or network restrictions.
+- TLS/SSL Issues: The TLS timeout could be due to certificate issues, proxy interception, or network restrictions.
 
-Pacman Configuration: Pacman may not be honoring the proxy settings or may require additional configuration.
+- Pacman Configuration: Pacman may not be honoring the proxy settings or may require additional configuration.
 
-Firewall/Proxy Restrictions: Your company's proxy might be blocking or timing out certain connections.
+- Firewall/Proxy Restrictions: Your company's proxy might be blocking or timing out certain connections.
 
-Steps to Resolve
-1. Verify Proxy Environment Variables
+- Steps to Resolve
+Verify Proxy Environment Variables
 Ensure the proxy variables are correctly set and accessible to pacman. Run the following in the terminal where you execute pacman:
 bash
 
+```bash
 echo $http_proxy
 echo $https_proxy
+```
 
 If they are not set or incorrect, set them again:
 bash
 
+```bash
 export http_proxy="http://proxy.company.com:1234"
 export https_proxy="http://proxy.company.com:1234"
+```
 
 To make these persistent across sessions, add them to your shell configuration (e.g., ~/.bashrc or /etc/environment for global settings):
 bash
 
+```bash
 echo 'export http_proxy=http://proxy.company.com:1234' >> ~/.bashrc
 echo 'export https_proxy=http://proxy.company.com:1234' >> ~/.bashrc
 source ~/.bashrc
-
+```
 2. Configure Pacman to Use the Proxy
 Pacman itself may not automatically use the http_proxy and https_proxy environment variables. You can configure a proxy in /etc/pacman.conf or use a tool like wget (which pacman relies on for downloads) to respect proxy settings.
 Check if wget is honoring the proxy by testing a download:
@@ -61,12 +71,12 @@ curl http://archlinux.org
 Switch to TAP Networking (Optional): If user-mode networking is causing issues, consider switching to TAP networking for better control. This requires root privileges on the host and setting up a bridge:
 bash
 
-# On the host, create a TAP interface
+##### On the host, create a TAP interface
 sudo ip tuntap add dev tap0 mode tap
 sudo ip link set tap0 up
 sudo ip link set tap0 master br0  # Assuming a bridge 'br0' exists
 
-# Update QEMU command to use TAP
+##### Update QEMU command to use TAP
 qemu-system-x86_64 -net nic -net tap,ifname=tap0,script=no,downscript=no ...
 
 Then configure the guest to use DHCP or a static IP. This may bypass some user-mode networking limitations.
@@ -76,7 +86,7 @@ The TLS timeout could be due to:
 Proxy SSL Inspection: Your company proxy might be intercepting HTTPS traffic, causing certificate mismatches. Check if the proxy provides a custom CA certificate that needs to be installed:
 bash
 
-# Add the proxy's CA certificate to the system
+##### Add the proxy's CA certificate to the system
 sudo cp company-ca-cert.pem /etc/ca-certificates/trust-source/anchors/
 sudo update-ca-certificates
 
@@ -109,11 +119,11 @@ curl -s 'https://archlinux.org/mirrorlist/?country=all&protocol=https&use_mirror
 6. Bypass Proxy for Testing
 If possible, test without the proxy to isolate the issue. Temporarily unset the proxy variables:
 bash
-
+```bash
 unset http_proxy
 unset https_proxy
 sudo pacman -Syu
-
+```
 If this works, the proxy is likely the issue. Contact your IT department to confirm the proxy allows access to Arch Linux mirrors (e.g., https://mirror.archlinux.org).
 7. Debug with Verbose Output
 Run pacman with verbose output to get more details on the TLS timeout:
