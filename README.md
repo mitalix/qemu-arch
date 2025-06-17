@@ -21,7 +21,7 @@ Presently, the best option for archlinux on qemu is a virtual machine image http
 
 ```bash
 image_dir=../images/archlinux
-disk=${image_dir}/Arch-Linux-x86_64-basic-20250601.358142.qcow2
+disk=${image_dir}/Arch-Linux-x86_64-basic-20250615.366044.qcow2
 ```
 
 Using the virtual machine image is more convenient, because there is no lengthy installation process
