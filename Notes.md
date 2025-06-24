@@ -48,16 +48,16 @@ source ~/.bashrc
 Pacman itself may not automatically use the http_proxy and https_proxy environment variables. You can configure a proxy in /etc/pacman.conf or use a tool like wget (which pacman relies on for downloads) to respect proxy settings.
 Check if wget is honoring the proxy by testing a download:
 bash
-
+```bash
 wget -S https://archlinux.org
-
+```
 If wget fails with a TLS timeout, it confirms the proxy or network issue. Configure wget to use the proxy by editing ~/.wgetrc or /etc/wgetrc:
 bash
-
+```bash
 echo 'use_proxy = on' >> ~/.wgetrc
 echo 'http_proxy = http://proxy.company.com:1234' >> ~/.wgetrc
 echo 'https_proxy = http://proxy.company.com:1234' >> ~/.wgetrc
-
+```
 Then retry pacman -Syu.
 3. Check QEMU Networking
 QEMU's user-mode networking (SLiRP) is simple but limited and may not handle complex proxy setups well. Since you can SSH into the VM, basic networking is working, but HTTPS traffic may be restricted.
